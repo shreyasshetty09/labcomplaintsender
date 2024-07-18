@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "350360634344",
+    "firebase_url": "https://labproject-af95f-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "labproject-af95f",
+    "storage_bucket": "labproject-af95f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350360634344:android:df84654c9d0dab61d51a5d",
+        "android_client_info": {
+          "package_name": "com.example.labproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBABDAzizsm_kEXDg6iCjoFVY6ZWHkEdDo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
