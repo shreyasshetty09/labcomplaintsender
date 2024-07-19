@@ -21,8 +21,10 @@ class _LabPageState extends State<LabPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Lab Complaints'),
+        backgroundColor: Colors.blueGrey,
       ),
-      body: Padding(
+      body: Container(
+        color: Colors.grey[200],
         padding: EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
@@ -48,11 +50,22 @@ class _LabPageState extends State<LabPage> {
                     child: Text(value),
                   );
                 }).toList(),
-                decoration: InputDecoration(labelText: 'Select Lab'),
+                decoration: InputDecoration(
+                  labelText: 'Select Lab',
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
               ),
+              SizedBox(height: 20),
               TextFormField(
                 controller: _instructorNameController,
-                decoration: InputDecoration(labelText: 'Instructor Name'),
+                decoration: InputDecoration(
+                  labelText: 'Instructor Name',
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the instructor name';
@@ -60,9 +73,15 @@ class _LabPageState extends State<LabPage> {
                   return null;
                 },
               ),
+              SizedBox(height: 20),
               TextFormField(
                 controller: _instructorIdController,
-                decoration: InputDecoration(labelText: 'Instructor ID'),
+                decoration: InputDecoration(
+                  labelText: 'Instructor ID',
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the instructor ID';
@@ -70,9 +89,15 @@ class _LabPageState extends State<LabPage> {
                   return null;
                 },
               ),
+              SizedBox(height: 20),
               TextFormField(
                 controller: _pcNoController,
-                decoration: InputDecoration(labelText: 'PC No'),
+                decoration: InputDecoration(
+                  labelText: 'PC No',
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the PC number';
@@ -80,9 +105,15 @@ class _LabPageState extends State<LabPage> {
                   return null;
                 },
               ),
+              SizedBox(height: 20),
               TextFormField(
                 controller: _complaintController,
-                decoration: InputDecoration(labelText: 'Complaint'),
+                decoration: InputDecoration(
+                  labelText: 'Complaint',
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the complaint';
@@ -103,12 +134,25 @@ class _LabPageState extends State<LabPage> {
                     );
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                          content: Text('Complaint Submitted Successfully')),
+                        content: Text('Complaint Submitted Successfully'),
+                        backgroundColor: Colors.green,
+                      ),
                     );
                     Navigator.pop(context);
                   }
                 },
-                child: Text('Submit'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueGrey,
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  textStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                child: Text(
+                  'Submit',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),

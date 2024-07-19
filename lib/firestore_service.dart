@@ -61,7 +61,7 @@ class FirestoreService {
     final snapshot = await _db.collection('feedbackForms').get();
     return snapshot.docs
         .map((doc) => {
-              ...doc.data() as Map<String, dynamic>,
+              ...doc.data(),
               'id': doc.id,
             })
         .toList();

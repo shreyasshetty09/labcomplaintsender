@@ -4,7 +4,6 @@ import 'lab_page.dart';
 import 'classroom_page.dart';
 import 'auth_service.dart';
 import 'firestore_service.dart';
-import 'history_page.dart'; // Ensure this import is added
 
 class HomePage extends StatefulWidget {
   @override
@@ -30,7 +29,6 @@ class _HomePageState extends State<HomePage> {
         _feedbacks = feedbacks;
       });
     } catch (e) {
-      // Handle error (e.g., show a message to the user)
       print('Error fetching feedbacks: $e');
     }
   }
@@ -87,8 +85,11 @@ class _HomePageState extends State<HomePage> {
                       _suggestionController.text,
                     );
                     Navigator.of(context).pop();
-                    _fetchFeedbacks(); // Refresh feedback list
+                    _fetchFeedbacks();
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueGrey,
+                  ),
                   child: Text('Submit'),
                 ),
               ],
@@ -106,6 +107,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
+        backgroundColor: Colors.blueGrey,
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.history),
@@ -122,47 +124,72 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LabPage()),
-              );
-            },
-            child: Text('Lab'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ClassroomPage()),
-              );
-            },
-            child: Text('Classroom'),
-          ),
-          Expanded(
-            child: _feedbacks.isEmpty
-                ? Center(child: Text('No feedbacks yet'))
-                : ListView.builder(
-                    itemCount: _feedbacks.length,
-                    itemBuilder: (context, index) {
-                      final feedback = _feedbacks[index];
-                      final userId = feedback['userId'] ?? 'Unknown';
-                      final status = feedback['status'] ?? 'Unknown';
-                      return ListTile(
-                        title: Text('Feedback from $userId'),
-                        subtitle: Text('Status: $status'),
-                        onTap: () {
-                          _openFeedbackForm(feedback);
-                        },
-                      );
-                    },
+      body: Container(
+        color: Colors.grey[200],
+        padding: EdgeInsets.all(16.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LabPage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueGrey,
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
                   ),
+                  child: Text('Lab'),
+                ),
+              ),
+              SizedBox(height: 10),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ClassroomPage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueGrey,
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                  ),
+                  child: Text('Classroom'),
+                ),
+              ),
+              SizedBox(height: 20),
+              Expanded(
+                child: _feedbacks.isEmpty
+                    ? Center(child: Text('No feedbacks yet'))
+                    : ListView.builder(
+                        itemCount: _feedbacks.length,
+                        itemBuilder: (context, index) {
+                          final feedback = _feedbacks[index];
+                          final userId = feedback['userId'] ?? 'Unknown';
+                          final status = feedback['status'] ?? 'Unknown';
+                          return Card(
+                            margin: EdgeInsets.symmetric(vertical: 8.0),
+                            child: ListTile(
+                              title: Text('Feedback from $userId'),
+                              subtitle: Text('Status: $status'),
+                              onTap: () {
+                                _openFeedbackForm(feedback);
+                              },
+                            ),
+                          );
+                        },
+                      ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
