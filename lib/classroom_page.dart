@@ -17,22 +17,41 @@ class _ClassroomPageState extends State<ClassroomPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Classroom Complaint'),
+        backgroundColor: Colors.blueGrey,
       ),
-      body: Padding(
+      body: Container(
+        color: Colors.grey[200],
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            TextField(
+            TextFormField(
               controller: _nameController,
-              decoration: InputDecoration(labelText: 'Your Name'),
+              decoration: InputDecoration(
+                labelText: 'Your Name',
+                border: OutlineInputBorder(),
+                filled: true,
+                fillColor: Colors.white,
+              ),
             ),
-            TextField(
+            SizedBox(height: 20),
+            TextFormField(
               controller: _classNoController,
-              decoration: InputDecoration(labelText: 'Classroom Number'),
+              decoration: InputDecoration(
+                labelText: 'Classroom Number',
+                border: OutlineInputBorder(),
+                filled: true,
+                fillColor: Colors.white,
+              ),
             ),
-            TextField(
+            SizedBox(height: 20),
+            TextFormField(
               controller: _complaintController,
-              decoration: InputDecoration(labelText: 'Complaint'),
+              decoration: InputDecoration(
+                labelText: 'Complaint',
+                border: OutlineInputBorder(),
+                filled: true,
+                fillColor: Colors.white,
+              ),
             ),
             SizedBox(height: 20),
             ElevatedButton(
@@ -57,7 +76,18 @@ class _ClassroomPageState extends State<ClassroomPage> {
                   );
                 }
               },
-              child: Text('Submit'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueGrey,
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                textStyle: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              child: Text(
+                'Submit',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         ),

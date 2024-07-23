@@ -43,32 +43,43 @@ class _HomePageState extends State<HomePage> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
               title: Text('Feedback Form'),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('Rate your experience:'),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(5, (index) {
-                      return IconButton(
-                        icon: Icon(
-                          index < _rating ? Icons.star : Icons.star_border,
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Rate your experience:'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(5, (index) {
+                        return IconButton(
+                          icon: Icon(
+                            index < _rating ? Icons.star : Icons.star_border,
+                          ),
+                          color: Colors.amber,
+                          onPressed: () {
+                            setState(() {
+                              _rating = index + 1;
+                            });
+                          },
+                        );
+                      }),
+                    ),
+                    TextField(
+                      controller: _suggestionController,
+                      decoration: InputDecoration(
+                        labelText: 'Suggestions',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
-                        color: Colors.amber,
-                        onPressed: () {
-                          setState(() {
-                            _rating = index + 1;
-                          });
-                        },
-                      );
-                    }),
-                  ),
-                  TextField(
-                    controller: _suggestionController,
-                    decoration: InputDecoration(labelText: 'Suggestions'),
-                  ),
-                ],
+                      ),
+                      maxLines: 3,
+                    ),
+                  ],
+                ),
               ),
               actions: [
                 TextButton(
@@ -176,6 +187,17 @@ class _HomePageState extends State<HomePage> {
                           final status = feedback['status'] ?? 'Unknown';
                           return Card(
                             margin: EdgeInsets.symmetric(vertical: 8.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              side: BorderSide(
+                                color: status == 'Pending'
+                                    ? Colors.orange
+                                    : status == 'Approved'
+                                        ? Colors.green
+                                        : Colors.red,
+                                width: 2,
+                              ),
+                            ),
                             child: ListTile(
                               title: Text('Feedback from $userId'),
                               subtitle: Text('Status: $status'),
