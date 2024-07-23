@@ -356,11 +356,14 @@ class _ITHomePageState extends State<ITHomePage> {
               style: TextStyle(color: Colors.blueAccent)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (data['rating'] != null) Text('Rating: ${data['rating']}'),
-              SizedBox(height: 10),
               if (data['comments'] != null)
-                Text('Comments: ${data['comments']}'),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Text('Comments: ${data['comments']}'),
+                ),
             ],
           ),
           actions: [
