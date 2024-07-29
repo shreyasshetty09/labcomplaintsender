@@ -14,6 +14,24 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   final AuthService _authService = AuthService();
 
+  void _showAlertDialog(String title, String content, {VoidCallback? onPressed}) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: [
+          TextButton(
+            onPressed: onPressed ?? () {
+              Navigator.of(context).pop();
+            },
+            child: Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,38 +69,15 @@ class _LoginPageState extends State<LoginPage> {
                     User? user = await _authService.signInWithEmailPassword(
                         _emailController.text, _passwordController.text);
                     if (user != null) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text('Success'),
-                          content: Text('Logged in successfully!'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                    context, '/home');
-                              },
-                              child: Text('OK'),
-                            ),
-                          ],
-                        ),
+                      _showAlertDialog(
+                        'Success',
+                        'Logged in successfully!',
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, '/home');
+                        },
                       );
                     } else {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text('Error'),
-                          content: Text('Wrong credentials!'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('OK'),
-                            ),
-                          ],
-                        ),
-                      );
+                      _showAlertDialog('Error', 'Wrong credentials!');
                     }
                   },
                   style: ElevatedButton.styleFrom(

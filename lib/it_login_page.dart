@@ -15,7 +15,8 @@ class _ITLoginPageState extends State<ITLoginPage> {
   final AuthService _authService = AuthService();
   bool _isLoading = false;
 
-  void _showAlertDialog(String title, String content) {
+  void _showAlertDialog(String title, String content,
+      {VoidCallback? onPressed}) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -23,7 +24,7 @@ class _ITLoginPageState extends State<ITLoginPage> {
         content: Text(content),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: onPressed ?? () => Navigator.pop(context),
             child: Text('OK'),
           ),
         ],
@@ -50,9 +51,15 @@ class _ITLoginPageState extends State<ITLoginPage> {
     );
 
     if (user != null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => ITHomePage()),
+      _showAlertDialog(
+        'Success',
+        'Logged in successfully!',
+        onPressed: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => ITHomePage()),
+          );
+        },
       );
     } else {
       _showAlertDialog('Login Failed', 'Incorrect email or password.');
