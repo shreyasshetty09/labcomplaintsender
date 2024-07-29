@@ -92,52 +92,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               SizedBox(height: 10),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    User? user = await _authService.signInWithGoogle();
-                    if (user != null) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text('Success'),
-                          content: Text('Logged in successfully!'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                    context, '/home');
-                              },
-                              child: Text('OK'),
-                            ),
-                          ],
-                        ),
-                      );
-                    } else {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text('Error'),
-                          content: Text('Wrong credentials!'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('OK'),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueGrey,
-                  ),
-                  child: Text('Login with Google'),
-                ),
-              ),
               TextButton(
                 onPressed: () {
                   // Navigate to Forgot Password page
