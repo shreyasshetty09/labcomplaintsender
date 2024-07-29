@@ -34,6 +34,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _openFeedbackForm(Map<String, dynamic> feedback) {
+    if (feedback['status'] == 'submitted') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Feedback has already been submitted.'),
+        ),
+      );
+      return;
+    }
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -190,9 +199,9 @@ class _HomePageState extends State<HomePage> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                               side: BorderSide(
-                                color: status == 'Pending'
+                                color: status == 'pending'
                                     ? Colors.orange
-                                    : status == 'Approved'
+                                    : status == 'submitted'
                                         ? Colors.green
                                         : Colors.red,
                                 width: 2,

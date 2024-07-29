@@ -208,6 +208,8 @@ class _ITHomePageState extends State<ITHomePage> {
       children: feedbackForms.map((feedback) {
         final data = feedback.data() as Map<String, dynamic>;
         final userId = data['userId'];
+        final rating = data['rating'] ?? 'No rating';
+        final comments = data['comments'] ?? 'No comments';
         final status = data['status'];
 
         return Card(
@@ -218,7 +220,14 @@ class _ITHomePageState extends State<ITHomePage> {
           child: ListTile(
             leading: Icon(Icons.feedback, color: Colors.blueAccent),
             title: Text('Feedback from $userId'),
-            subtitle: Text('Status: $status'),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Rating: $rating'),
+                Text('Comments: $comments'),
+                Text('Status: $status'),
+              ],
+            ),
             trailing: IconButton(
               icon: Icon(Icons.delete, color: Colors.redAccent),
               onPressed: () async {

@@ -11,6 +11,7 @@ class FirestoreService {
         'firstName': firstName,
         'lastName': lastName,
         'email': email,
+        'timestamp': FieldValue.serverTimestamp(),
       });
     } catch (e) {
       print('Error adding user: $e');
@@ -26,6 +27,7 @@ class FirestoreService {
         'firstName': firstName,
         'lastName': lastName,
         'id': id,
+        'timestamp': FieldValue.serverTimestamp(),
       });
     } catch (e) {
       print('Error adding IT user: $e');
@@ -44,6 +46,7 @@ class FirestoreService {
         'pcNo': pcNo,
         'complaint': complaint,
         'timestamp': FieldValue.serverTimestamp(),
+        'status': 'unread',
       });
     } catch (e) {
       print('Error adding lab complaint: $e');
@@ -60,6 +63,7 @@ class FirestoreService {
         'classNo': classNo,
         'complaint': complaint,
         'timestamp': FieldValue.serverTimestamp(),
+        'status': 'unread',
       });
     } catch (e) {
       print('Error adding classroom complaint: $e');
@@ -68,10 +72,13 @@ class FirestoreService {
   }
 
   // Add feedback form
-  Future<void> addFeedbackForm(String userId) async {
+  Future<void> addFeedbackForm(
+      String userId, int rating, String comments) async {
     try {
       await _db.collection('feedbackForms').add({
         'userId': userId,
+        'rating': rating,
+        'comments': comments,
         'status': 'pending',
         'timestamp': FieldValue.serverTimestamp(),
       });
@@ -87,7 +94,7 @@ class FirestoreService {
       final snapshot = await _db.collection('feedbackForms').get();
       return snapshot.docs
           .map((doc) => {
-                ...doc.data(),
+                ...doc.data() as Map<String, dynamic>,
                 'id': doc.id,
               })
           .toList();
@@ -99,11 +106,11 @@ class FirestoreService {
 
   // Submit feedback
   Future<void> submitFeedback(
-      String feedbackId, int rating, String suggestion) async {
+      String feedbackId, int rating, String comments) async {
     try {
       await _db.collection('feedbackForms').doc(feedbackId).update({
         'rating': rating,
-        'suggestion': suggestion,
+        'comments': comments,
         'status': 'submitted',
       });
     } catch (e) {
@@ -139,7 +146,8 @@ class FirestoreService {
   }
 
   // Get classroom complaints
-  Future<List<Map<String, dynamic>>> getClassroomComplaints(String userId) async {
+  Future<List<Map<String, dynamic>>> getClassroomComplaints(
+      String userId) async {
     try {
       QuerySnapshot snapshot =
           await _db.collection('classroom_complaints').get();
@@ -194,7 +202,7 @@ class FirestoreService {
     }
   }
 
-  // Clear all complaints
+  // Clear all complaints for a user
   Future<void> clearComplaints(String userId) async {
     try {
       // Clear lab complaints
