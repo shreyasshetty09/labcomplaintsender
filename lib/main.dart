@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: AuthWrapper(),
+      home: SplashScreen(),
       routes: {
         '/login': (context) => LoginPage(),
         '/home': (context) => HomePage(),
@@ -36,8 +36,71 @@ class MyApp extends StatelessWidget {
         '/itLogin': (context) => ITLoginPage(),
         '/itRegister': (context) => ITRegisterPage(),
         '/itHome': (context) => ITHomePage(),
-        '/history': (context) => HistoryPage(userId: '',),
+        '/history': (context) => HistoryPage(
+              userId: '',
+            ),
       },
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _navigateToHome();
+  }
+
+  _navigateToHome() async {
+    await Future.delayed(Duration(seconds: 3), () {});
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => AuthWrapper()),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.blue.shade100,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.computer,
+              size: 100,
+              color: Colors.blue.shade800,
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Welcome to',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue.shade800,
+              ),
+            ),
+            Text(
+              'Complaint Management System',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue.shade800,
+              ),
+            ),
+            SizedBox(height: 30),
+            CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue.shade800),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
